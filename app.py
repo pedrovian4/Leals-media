@@ -49,6 +49,7 @@ def create_app():
             try: 
                 db.session.add(u)
                 db.session.commit()
+                return redirect('/logi')
             
             # Tratamento de um erro  geral  em execução
             # Desvantagem: Menos Otimização de codigo -> Perda de perfomance
