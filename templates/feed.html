@@ -1,0 +1,60 @@
+{%extends "base.html"%}
+{%block content%}
+
+
+
+<header style="margin-bottom:0;background-color: rgba(170, 232, 240, 0.154);">
+
+    <p style="margin:0" class="ml-2">MarcoWitter</p>
+</header>
+
+<main style="height:100vh; padding-top:0;background-color: rgba(169, 244, 255, 0.347);">
+
+    <section id="post-area">
+        
+        <div class="container pt-5">
+            <form class="form-control" action="/feed" method="post">
+                
+                <textarea  class=" form-control" placeholder = "O que será que o leal está pensando?" name="tt" cols="10" rows="5"></textarea>
+
+                <div style="display:flex;align-items:flex-end; justify-content:flex-end;">
+
+                    <input type="submit" class=" btn btn-outline-primary mt-5" value="Enviar">
+                </div>
+               
+            </form>
+        </div>
+    
+    </section>
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="text-center">
+                    <div style="width:700px" id="card">
+                        <div style="margin:2% 25% 2% 25%;height: 300px; background-color:rgb(195, 238, 251)">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="top">
+                                            <p style="font-weight:500"><a>Pedro</a></p>
+                                        </div>
+                
+                                        <article style="margin:5% 10% 5% 10%;text-align:justify;">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur officia a voluptates velit dolore exercitationem nam maiores in cumque odio quis, laudantium, tenetur tempora impedit unde quibusdam explicabo voluptatibus ipsum?
+                                        </article>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+
+
+{%endblock%}
