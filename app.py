@@ -83,6 +83,21 @@ def create_app():
  
     @app.route('/feed',methods = ['GET','POST'])
     def feed():
-        return  render_template('feed.html')
-
+        
+        try: 
+             if not session['logged']: 
+                 return redirect('/login')
+             
+             if request.method == 'POST': 
+                 post = Post(post=request.form['tt'], user_who_sent=session['name'])
+                 try:
+                      db.session.add(post)
+                      db.session.commit()
+                      return redirect('/feed')
+                 except Exception:
+                     return '<h2>Erro com o banco de dados</h2>'            
+             return render_template('feed.html', tts= Post.query.all())
+        except KeyError: 
+            return redirect('/login')
+       
     return app
