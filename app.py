@@ -18,19 +18,20 @@ def create_app():
     app.config['SECRET_KEY']= urandom(24)
     app.config['SQLALCHEMY_DATABASE_URI']=getenv('POSTGRES')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
-    db = SQLAlchemy(app=app)
+    db = SQLAlchemy(app)
     Migrate(app= app, db = db)
+    
+
+    class Post (db.Model): 
+        id = db.Column(db.Integer, primary_key = True)
+        post = db.Column(db.String)
+        user = db.Column(db.String)
     
     class User(db.Model): 
         id = db.Column(db.Integer, primary_key= True)
-        name = db.Column(db.String, nullable = False)
-        email = db.Column(db.String, nullable = False)
-        password = db.Column(db.String, nullable= False)
-    
-    class Post (db.Model): 
-        id = db.Column(db.Integer, primary_key = True)
-        post = db.Column(db.String, nullable= False)
-        user_who_sent = db.Column(db.String, nullable = False)
+        name = db.Column(db.String)
+        email = db.Column(db.String)
+        password = db.Column(db.String)
     
     
     
@@ -44,21 +45,16 @@ def create_app():
     def signup():
         if request.method == 'POST':
             form = request.form   
-            u = User(name = form['name'], email = form['email'], password = form['password'])
-            
+            u = User(name = form['name'], email = form['email'], password = form['password'])         
             try: 
                 db.session.add(u)
                 db.session.commit()
                 return redirect('/login')
-            
             # Tratamento de um erro  geral  em execução
             # Desvantagem: Menos Otimização de codigo -> Perda de perfomance
             # Vantagem: Flexibilidade de erros
-            except Exception: 
-                    return '<h1>OPS! Ocorreu um erro</h3>'
-              
-            
-            
+            except Exception as e: 
+                    return f'<h1>OPS! Ocorreu um erro</h3> {e}'
         return render_template('signup.html')
 
     @app.route('/login', methods =['GET','POST'])
@@ -90,7 +86,7 @@ def create_app():
                  return redirect('/login')
              
              if request.method == 'POST': 
-                 post = Post(post=request.form['tt'], user_who_sent=session['name'])
+                 post = Post(post=request.form['tt'], user=session['name'])
                  try:
                       db.session.add(post)
                       db.session.commit()
